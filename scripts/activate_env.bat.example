@@ -1,0 +1,32 @@
+@echo off
+REM =========================================================
+REM Script de ejemplo para activar entorno virtual
+REM Adapta las rutas según tu configuración local
+REM =========================================================
+
+echo Activando entorno virtual...
+
+REM Cambiar a la ruta de tu proyecto
+cd /d "C:\path\to\your\project"
+
+REM Activar entorno virtual (adaptar ruta)
+if exist "venv\Scripts\activate.bat" (
+    call venv\Scripts\activate.bat
+    echo Entorno virtual activado correctamente
+) else (
+    echo ERROR: No se encontró el entorno virtual en venv\Scripts\
+    echo Crear entorno virtual ejecutando: python -m venv venv
+    pause
+    exit /b 1
+)
+
+REM Verificar instalación de dependencias
+python -c "import odoo" 2>nul
+if errorlevel 1 (
+    echo ADVERTENCIA: Odoo no parece estar instalado
+    echo Instalar dependencias con: pip install -r requirements.txt
+)
+
+echo.
+echo Entorno listo para desarrollo
+echo.

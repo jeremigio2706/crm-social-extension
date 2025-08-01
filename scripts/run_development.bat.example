@@ -1,0 +1,48 @@
+@echo off
+REM =========================================================
+REM Script de ejemplo para ejecutar Odoo en desarrollo
+REM Adapta las rutas según tu instalación de Odoo
+REM =========================================================
+
+setlocal enabledelayedexpansion
+
+echo =====================================================
+echo    CRM Social Extension - Desarrollo                
+echo =====================================================
+echo.
+
+REM Activar entorno virtual
+call activate_env.bat
+
+echo Iniciando Odoo en modo desarrollo...
+echo.
+echo Información de acceso:
+echo   • URL: http://localhost:8069
+echo   • Usuario: admin  
+echo   • Contraseña: admin
+echo   • Base de datos: crm_social_dev
+echo.
+
+REM ADAPTAR ESTAS RUTAS A TU INSTALACIÓN
+set ODOO_BIN=C:\path\to\odoo\odoo-bin
+set CONFIG_FILE=config\odoo.conf
+set DATABASE_NAME=crm_social_dev
+
+REM Verificar que existe el archivo de Odoo
+if not exist "%ODOO_BIN%" (
+    echo ERROR: No se encontró odoo-bin en %ODOO_BIN%
+    echo Edita este script y configura la ruta correcta
+    pause
+    exit /b 1
+)
+
+REM Ejecutar Odoo con el módulo CRM Social Extension
+python "%ODOO_BIN%" ^
+    -c "%CONFIG_FILE%" ^
+    -d "%DATABASE_NAME%" ^
+    -i crm_social_extension ^
+    --dev=reload,qweb,werkzeug,xml
+
+echo.
+echo Odoo finalizado
+pause

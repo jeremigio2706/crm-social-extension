@@ -1,0 +1,158 @@
+/* Backend Styles for CRM Social Extension */
+
+/* Form View Social Media Tab */
+.social_profile_indicator .badge {
+    padding: 8px 12px;
+    font-size: 12px;
+    border-radius: 15px;
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.social_profile_indicator .badge i {
+    font-size: 14px;
+}
+
+.social_media_preview {
+    background: #f8f9fa;
+    padding: 15px;
+    border-radius: 8px;
+    border: 1px solid #dee2e6;
+}
+
+/* Smart Button Styles */
+.oe_stat_button .social_complete_badge {
+    position: absolute;
+    top: 5px;
+    right: 5px;
+}
+
+.oe_stat_button .social_complete_badge i {
+    font-size: 16px;
+}
+
+/* Kanban View Social Icons */
+.social_kanban_info {
+    min-height: 25px;
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.social_kanban_info .badge {
+    padding: 4px 8px;
+    font-size: 10px;
+    border-radius: 12px;
+    display: inline-flex;
+    align-items: center;
+    gap: 3px;
+    max-width: fit-content;
+}
+
+.social_icons {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+.social_icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    background: #ffffff;
+    border: 1px solid #dee2e6;
+    transition: all 0.2s ease;
+}
+
+.social_icon:hover {
+    transform: scale(1.1);
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.social_icon i {
+    font-size: 12px;
+}
+
+/* Specific platform colors for icons */
+.social_icon.facebook:hover {
+    background: #1877f2;
+    border-color: #1877f2;
+}
+
+.social_icon.facebook:hover i {
+    color: white !important;
+}
+
+.social_icon.linkedin:hover {
+    background: #0077b5;
+    border-color: #0077b5;
+}
+
+.social_icon.linkedin:hover i {
+    color: white !important;
+}
+
+.social_icon.twitter:hover {
+    background: #000000;
+    border-color: #000000;
+}
+
+.social_icon.twitter:hover i {
+    color: white !important;
+}
+
+/* Tree View Enhancements */
+.o_list_table .o_data_cell[name="social_profile_complete"] {
+    text-align: center;
+}
+
+.o_list_table .o_data_cell[name="social_profile_completion_rate"] {
+    text-align: center;
+    font-weight: 600;
+}
+
+/* Form View URL Fields with Icons */
+.o_form_view .o_field_widget[name="facebook_url"]:before {
+    content: "\f09a";
+    font-family: FontAwesome;
+    color: #1877f2;
+    margin-right: 8px;
+    font-weight: normal;
+}
+
+.o_form_view .o_field_widget[name="linkedin_url"]:before {
+    content: "\f0e1";
+    font-family: FontAwesome;
+    color: #0077b5;
+    margin-right: 8px;
+    font-weight: normal;
+}
+
+.o_form_view .o_field_widget[name="twitter_url"]:before {
+    content: "\f099";
+    font-family: FontAwesome;
+    color: #000000;
+    margin-right: 8px;
+    font-weight: normal;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .social_icons {
+        gap: 4px;
+    }
+    
+    .social_icon {
+        width: 20px;
+        height: 20px;
+    }
+    
+    .social_icon i {
+        font-size: 10px;
+    }
+}

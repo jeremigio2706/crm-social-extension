@@ -1,0 +1,202 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        
+        <!-- Form View Extension -->
+        <record id="view_partner_form_social_extension" model="ir.ui.view">
+            <field name="name">res.partner.form.social.extension</field>
+            <field name="model">res.partner</field>
+            <field name="inherit_id" ref="base.view_partner_form"/>
+            <field name="arch" type="xml">
+                
+                <!-- Add Social Media tab after main content -->
+                <notebook position="inside">
+                    <page string="Social Media" name="social_media" groups="base.group_user">
+                        <group>
+                            <group string="Social Media">
+                                <field name="facebook_url" widget="url" placeholder="https://facebook.com/username"/>
+                                <field name="linkedin_url" widget="url" placeholder="https://linkedin.com/in/username"/>
+                                <field name="twitter_url" widget="url" placeholder="https://x.com/username"/>
+                            </group>
+                            <group string="Profile Status">
+                                <field name="social_profile_complete" readonly="1"/>
+                                <field name="social_profile_completion_display" string="Completion Rate" readonly="1"/>
+                                <div class="social_profile_indicator" invisible="not social_profile_complete">
+                                    <span class="badge badge-success">
+                                        <i class="fa fa-check-circle"/> Profile Complete
+                                    </span>
+                                </div>
+                                <div class="social_profile_indicator" invisible="social_profile_complete">
+                                    <span class="badge badge-warning">
+                                        <i class="fa fa-exclamation-circle"/> Profile Incomplete
+                                    </span>
+                                </div>
+                            </group>
+                        </group>
+                        
+                        <!-- Social Media Preview -->
+                        <group string="Preview" invisible="social_profile_completion_rate == 0">
+                            <div class="social_media_preview">
+                                <div class="row">
+                                    <div class="col-md-4" invisible="not facebook_url">
+                                        <div class="social_preview_item">
+                                            <i class="fa fa-facebook text-primary fa-3x mb-3" title="Facebook"/>
+                                            <div class="social_preview_url">
+                                                <a href="#" class="social_preview_link facebook" onclick="window.open(this.parentElement.querySelector('.facebook_url_field').textContent, '_blank'); return false;">
+                                                    View Facebook Profile
+                                                </a>
+                                                <div class="facebook_url_field" style="display: none;">
+                                                    <field name="facebook_url" readonly="1" nolabel="1"/>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4" invisible="not linkedin_url">
+                                        <div class="social_preview_item">
+                                            <i class="fa fa-linkedin text-info fa-3x mb-3" title="LinkedIn"/>
+                                            <div class="social_preview_url">
+                                                <a href="#" class="social_preview_link linkedin" onclick="window.open(this.parentElement.querySelector('.linkedin_url_field').textContent, '_blank'); return false;">
+                                                    View LinkedIn Profile
+                                                </a>
+                                                <div class="linkedin_url_field" style="display: none;">
+                                                    <field name="linkedin_url" readonly="1" nolabel="1"/>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4" invisible="not twitter_url">
+                                        <div class="social_preview_item">
+                                            <i class="fa fa-twitter text-dark fa-3x mb-3" title="X (Twitter)"/>
+                                            <div class="social_preview_url">
+                                                <a href="#" class="social_preview_link twitter" onclick="window.open(this.parentElement.querySelector('.twitter_url_field').textContent, '_blank'); return false;">
+                                                    View X Profile
+                                                </a>
+                                                <div class="twitter_url_field" style="display: none;">
+                                                    <field name="twitter_url" readonly="1" nolabel="1"/>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </group>
+                    </page>
+                </notebook>
+                
+                <!-- Add profile completion indicator in header -->
+                <div name="button_box" position="inside">
+                    <button class="oe_stat_button" type="object" name="action_open_social_profiles" 
+                            invisible="social_profile_completion_rate == 0">
+                        <div class="o_field_widget o_stat_info">
+                            <span class="o_stat_value">
+                                <field name="social_profile_completion_display"/>
+                            </span>
+                            <span class="o_stat_text">Social Media</span>
+                        </div>
+                        <div class="social_complete_badge" invisible="not social_profile_complete">
+                            <i class="fa fa-check-circle text-success" title="Profile Complete"/>
+                        </div>
+                    </button>
+                </div>
+                
+            </field>
+        </record>
+
+        <!-- Tree View Extension -->
+        <record id="view_partner_tree_social_extension" model="ir.ui.view">
+            <field name="name">res.partner.tree.social.extension</field>
+            <field name="model">res.partner</field>
+            <field name="inherit_id" ref="base.view_partner_tree"/>
+            <field name="arch" type="xml">
+                <field name="email" position="after">
+                    <field name="social_profile_complete" string="Social Complete"/>
+                    <field name="social_profile_completion_display" string="% Complete"/>
+                </field>
+            </field>
+        </record>
+
+        <!-- Kanban View Extension -->
+        <record id="view_partner_kanban_social_extension" model="ir.ui.view">
+            <field name="name">res.partner.kanban.social.extension</field>
+            <field name="model">res.partner</field>
+            <field name="inherit_id" ref="base.res_partner_kanban_view"/>
+            <field name="arch" type="xml">
+                <field name="email" position="after">
+                    <div class="social_kanban_info mt-1">
+                        <div class="badge badge-success" invisible="not social_profile_complete">
+                            <i class="fa fa-check-circle" title="Profile Complete"/> Profile Complete
+                        </div>
+                        <div class="badge badge-warning" invisible="social_profile_complete or social_profile_completion_rate == 0">
+                            <i class="fa fa-exclamation-circle" title="Profile Incomplete"/> 
+                            <field name="social_profile_completion_display"/> Complete
+                        </div>
+                        <div class="social_icons mt-1" invisible="social_profile_completion_rate == 0">
+                            <span class="social_icon facebook me-1" invisible="not facebook_url" title="Facebook Profile">
+                                <i class="fa fa-facebook text-primary"/>
+                            </span>
+                            <span class="social_icon linkedin me-1" invisible="not linkedin_url" title="LinkedIn Profile">
+                                <i class="fa fa-linkedin text-info"/>
+                            </span>
+                            <span class="social_icon twitter me-1" invisible="not twitter_url" title="X Profile">
+                                <i class="fa fa-twitter text-dark"/>
+                            </span>
+                        </div>
+                    </div>
+                </field>
+            </field>
+        </record>
+
+        <!-- Search View Extension -->
+        <record id="view_partner_search_social_extension" model="ir.ui.view">
+            <field name="name">res.partner.search.social.extension</field>
+            <field name="model">res.partner</field>
+            <field name="inherit_id" ref="base.view_res_partner_filter"/>
+            <field name="arch" type="xml">
+                <filter name="supplier" position="after">
+                    <separator/>
+                    <filter string="Profile Complete" name="social_profile_complete" 
+                            domain="[('social_profile_complete', '=', True)]"/>
+                    <filter string="Profile Incomplete" name="social_profile_incomplete" 
+                            domain="[('social_profile_complete', '=', False), '|', '|', 
+                                     ('facebook_url', '!=', False), 
+                                     ('linkedin_url', '!=', False), 
+                                     ('twitter_url', '!=', False)]"/>
+                    <filter string="Has Social Media" name="has_social_media" 
+                            domain="['|', '|', 
+                                     ('facebook_url', '!=', False), 
+                                     ('linkedin_url', '!=', False), 
+                                     ('twitter_url', '!=', False)]"/>
+                </filter>
+                
+                <!-- Add search by social media -->
+                <field name="category_id" position="after">
+                    <field name="facebook_url" string="Facebook"/>
+                    <field name="linkedin_url" string="LinkedIn"/>
+                    <field name="twitter_url" string="X"/>
+                </field>
+            </field>
+        </record>
+
+        <!-- CRM Lead/Opportunity Form Extension -->
+        <record id="view_crm_lead_form_social_extension" model="ir.ui.view">
+            <field name="name">crm.lead.form.social.extension</field>
+            <field name="model">crm.lead</field>
+            <field name="inherit_id" ref="crm.crm_lead_view_form"/>
+            <field name="arch" type="xml">
+                <field name="partner_id" position="after">
+                    <div class="partner_social_info" invisible="not partner_id">
+                        <div class="social_profile_status">
+                            <span class="badge badge-success" invisible="not partner_id.social_profile_complete">
+                                <i class="fa fa-check-circle" title="Complete Social Profile"/> Customer has complete social profile
+                            </span>
+                            <span class="badge badge-warning" invisible="partner_id.social_profile_complete">
+                                <i class="fa fa-exclamation-circle" title="Incomplete Social Profile"/> Customer social profile incomplete
+                            </span>
+                        </div>
+                    </div>
+                </field>
+            </field>
+        </record>
+
+    </data>
+</odoo>

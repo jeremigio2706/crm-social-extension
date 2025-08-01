@@ -1,0 +1,22 @@
+# CRM Social Extension - Dependencias
+
+# Dependencias básicas de Odoo (instalar según tu versión)
+# psycopg2-binary>=2.8.6
+# lxml>=4.6.0
+# Pillow>=8.0.0
+# reportlab>=3.5.0
+# werkzeug>=2.0.0
+# python-dateutil>=2.8.0
+
+# Dependencias para testing
+pytest>=6.0.0
+pytest-cov>=2.10.0
+coverage>=5.0.0
+
+# Dependencias para desarrollo (opcional)
+flake8>=4.0.0
+black>=21.0.0
+
+# Nota: Este archivo lista las dependencias específicas del módulo
+# Para instalar Odoo completo, consulta la documentación oficial:
+# https://www.odoo.com/documentation/

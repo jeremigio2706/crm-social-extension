@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        
+        <!-- Website Menu for Customer Promotion -->
+        <record id="menu_customer_promotion" model="website.menu">
+            <field name="name">Nuestos Clientes</field>
+            <field name="url">/customers</field>
+            <field name="parent_id" ref="website.main_menu"/>
+            <field name="sequence">50</field>
+        </record>
+
+    </data>
+</odoo>

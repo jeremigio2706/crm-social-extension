@@ -1,0 +1,100 @@
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Distribution / packaging
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+MANIFEST
+
+# PyInstaller
+*.manifest
+*.spec
+
+# Installer logs
+pip-log.txt
+pip-delete-this-directory.txt
+
+# Unit test / coverage reports
+htmlcov/
+.tox/
+.coverage
+.coverage.*
+.cache
+nosetests.xml
+coverage.xml
+*.cover
+.hypothesis/
+.pytest_cache/
+
+# Virtual environments
+venv/
+env/
+ENV/
+env.bak/
+venv.bak/
+
+# Odoo specific
+*.pyc
+*.pyo
+*~
+*.swp
+*.swo
+.DS_Store
+.vscode/
+.idea/
+
+# Logs
+logs/
+*.log
+
+# Config files with sensitive data
+odoo_dev.conf
+config/odoo.conf
+
+# Data directory (exclude data files but keep module data)
+data/
+!custom-addons/*/data/
+
+# Backup files
+*.bak
+*.backup
+
+# Environment files
+.env
+.env.local
+.env.*.local
+
+# Coverage reports
+.coverage
+htmlcov/
+coverage.xml
+
+# Local development scripts (keep examples)
+*.bat
+!scripts/*.bat.example
+run_odoo.py
+activate_env.bat
+deactivate_env.bat
+first_run.bat
+quick_start.bat
+run_crm_social.bat
+create_sample_customers.py
+
+# Local configuration files
+.coverage.env.odoo-version

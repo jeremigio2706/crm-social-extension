@@ -1,0 +1,329 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        
+        <!-- Main Customer Promotion Page -->
+        <template id="customer_promotion_page" name="Customer Promotion">
+            <t t-call="website.layout">
+                <div id="wrap">
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-lg-12">
+                                <!-- Header Section -->
+                                <div class="promotion_header text-center mb-5">
+                                    <h1 class="display-4">Nuestros Increíbles Clientes</h1>
+                                    <p class="lead">Descubre las empresas con las que estamos orgullosos de trabajar y conéctate con ellas en redes sociales</p>
+                                    
+                                    <!-- Stats Dashboard -->
+                                    <div class="row stats_dashboard mt-4">
+                                        <div class="col-md-3">
+                                            <div class="stat_card">
+                                                <h3 class="stat_number"><t t-out="total_customers"/></h3>
+                                                <p class="stat_label">Total de Clientes</p>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <div class="stat_card">
+                                                <h3 class="stat_number"><t t-out="complete_profiles"/></h3>
+                                                <p class="stat_label">Perfiles Completos</p>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <div class="stat_card">
+                                                <h3 class="stat_number"><t t-out="round(completion_rate)"/>%</h3>
+                                                <p class="stat_label">Tasa de Finalización</p>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <div class="stat_card">
+                                                <h3 class="stat_number"><t t-out="len(customers)"/></h3>
+                                                <p class="stat_label">Mostrando Ahora</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Search Section -->
+                                <div class="search_section mb-4">
+                                    <form action="/customers" method="get" class="search_form">
+                                        <div class="input-group input-group-lg">
+                                            <input type="text" name="search" class="form-control" 
+                                                   placeholder="Buscar clientes por nombre o redes sociales..." 
+                                                   t-att-value="search_term"/>
+                                            <div class="input-group-append">
+                                                <button class="btn btn-primary" type="submit">
+                                                    <i class="fa fa-search"/> <span>Buscar</span>
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </form>
+                                    
+                                    <!-- Live Search Results -->
+                                    <div id="live_search_results" class="live_search_results" style="display: none;">
+                                        <!-- AJAX results will be populated here -->
+                                    </div>
+                                </div>
+
+                                <!-- Filter Buttons -->
+                                <div class="filter_section mb-4 text-center">
+                                    <a href="/customers" 
+                                       t-att-class="'btn btn-primary mr-2' if not filter_type and not search_term else 'btn btn-outline-primary mr-2'">
+                                        <i class="fa fa-users"/> <span>Todos los Clientes</span>
+                                    </a>
+                                    <a href="/customers?filter_type=complete" 
+                                       t-att-class="'btn btn-success mr-2' if filter_type == 'complete' else 'btn btn-outline-success mr-2'">
+                                        <i class="fa fa-check-circle"/> <span>Perfiles Completos</span>
+                                    </a>
+                                    <a href="/customers?filter_type=incomplete" 
+                                       t-att-class="'btn btn-warning mr-2' if filter_type == 'incomplete' else 'btn btn-outline-warning mr-2'">
+                                        <i class="fa fa-exclamation-circle"/> <span>Perfiles Incompletos</span>
+                                    </a>
+                                </div>
+
+                                <!-- Customers Grid -->
+                                <div class="customers_grid">
+                                    <div class="row">
+                                        <t t-foreach="customers" t-as="customer">
+                                            <div class="col-lg-4 col-md-6 mb-4">
+                                                <div class="customer_card h-100">
+                                                    <div class="customer_card_header">
+                                                        <div class="customer_image">
+                                                            <img t-if="customer.image_1920" 
+                                                                 t-att-src="image_data_uri(customer.image_1920)" 
+                                                                 class="img-fluid rounded-circle" 
+                                                                 t-att-alt="customer.name"/>
+                                                            <div t-else="1" class="customer_placeholder">
+                                                                <i t-if="customer.is_company" class="fa fa-building fa-3x"/>
+                                                                <i t-else="1" class="fa fa-user fa-3x"/>
+                                                            </div>
+                                                        </div>
+                                                        <div class="customer_status">
+                                                            <span t-if="customer.social_profile_complete" 
+                                                                  class="badge badge-success">
+                                                                <i class="fa fa-check-circle"/> Perfil Completo
+                                                            </span>
+                                                            <span t-elif="customer.facebook_url or customer.linkedin_url or customer.twitter_url" 
+                                                                  class="badge badge-warning">
+                                                                <i class="fa fa-exclamation-circle"/> 
+                                                                <t t-out="round(customer.social_profile_completion_rate)"/>% Completo
+                                                            </span>
+                                                            <span t-else="1" class="badge badge-secondary">
+                                                                <i class="fa fa-info-circle"/> Sin Redes Sociales
+                                                            </span>
+                                                        </div>
+                                                    </div>
+                                                    
+                                                    <div class="customer_card_body">
+                                                        <h5 class="customer_name">
+                                                            <a t-att-href="'/customers/%s' % customer.id" 
+                                                               t-out="customer.name"/>
+                                                        </h5>
+                                                        
+                                        <p t-if="customer.website" class="customer_website">
+                                            <a t-att-href="customer.website" target="_blank">
+                                                <i class="fa fa-globe"/> Visitar Sitio Web
+                                            </a>
+                                        </p>                                                        <div class="social_media_links" t-if="customer.facebook_url or customer.linkedin_url or customer.twitter_url">
+                                                            <t t-set="social_data" t-value="customer.get_social_media_data()"/>
+                                                            <t t-foreach="social_data" t-as="social">
+                                                                <a t-att-href="social['url']" target="_blank" 
+                                                                   class="social_link" 
+                                                                   t-att-data-platform="social['platform']"
+                                                                   t-att-style="'color: %s' % social['color']">
+                                                                    <i t-att-class="'fa %s fa-2x' % social['icon']"/>
+                                                                </a>
+                                                            </t>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </t>
+                                    </div>
+                                    
+                                    <!-- No Results Message -->
+                                    <div t-if="not customers" class="no_results text-center">
+                                        <div class="empty_state">
+                                            <i class="fa fa-search fa-4x text-muted mb-3"/>
+                                            <h4>No se encontraron clientes que coincidan con sus criterios.</h4>
+                                            <p t-if="search_term">
+                                                No hay clientes que coincidan con su búsqueda de "<strong t-out="search_term"/>".
+                                            </p>
+                                            <p t-else="1">Intente ajustar sus términos de búsqueda o filtros.</p>
+                                            <a href="/customers" class="btn btn-primary">Todos los Clientes</a>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Pagination and Results Info -->
+                                <div t-if="customers" class="pagination_section mt-5">
+                                    <!-- Results Info -->
+                                    <div class="results_info text-center mb-3">
+                                        <p class="text-muted">
+                                            Mostrando <strong t-out="showing_start or 1"/> - <strong t-out="showing_end or len(customers)"/> 
+                                            de <strong t-out="total_found or len(customers)"/> clientes
+                                        </p>
+                                    </div>
+                                    
+                                    <!-- Pagination Controls -->
+                                    <div t-if="has_next or has_previous" class="pagination_controls">
+                                        <nav>
+                                            <ul class="pagination justify-content-center">
+                                                <li t-att-class="'page-item' if has_previous else 'page-item disabled'">
+                                                    <a t-if="has_previous" 
+                                                       t-att-href="'/customers?page=%s&amp;search=%s&amp;filter_type=%s' % (current_page - 1, search_term or '', filter_type or '')" 
+                                                       class="page-link">Anterior</a>
+                                                    <span t-else="1" class="page-link">Anterior</span>
+                                                </li>
+                                                
+                                                <!-- Page Numbers -->
+                                                <t t-set="start_page" t-value="max(0, current_page - 2)"/>
+                                                <t t-set="end_page" t-value="min(total_pages, current_page + 3)"/>
+                                                
+                                                <t t-foreach="range(start_page, end_page)" t-as="page_num">
+                                                    <li t-att-class="'page-item active' if page_num == current_page else 'page-item'">
+                                                        <a t-if="page_num != current_page"
+                                                           t-att-href="'/customers?page=%s&amp;search=%s&amp;filter_type=%s' % (page_num, search_term or '', filter_type or '')" 
+                                                           class="page-link" t-out="page_num + 1"/>
+                                                        <span t-else="1" class="page-link" t-out="page_num + 1"/>
+                                                    </li>
+                                                </t>
+                                                
+                                                <li t-att-class="'page-item' if has_next else 'page-item disabled'">
+                                                    <a t-if="has_next" 
+                                                       t-att-href="'/customers?page=%s&amp;search=%s&amp;filter_type=%s' % (current_page + 1, search_term or '', filter_type or '')" 
+                                                       class="page-link">Siguiente</a>
+                                                    <span t-else="1" class="page-link">Siguiente</span>
+                                                </li>
+                                            </ul>
+                                        </nav>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </t>
+        </template>
+
+        <!-- Individual Customer Detail Page -->
+        <template id="customer_detail_page" name="Customer Detail">
+            <t t-call="website.layout">
+                <div id="wrap">
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-lg-8 offset-lg-2">
+                                
+                                <!-- Back Button -->
+                                <div class="back_navigation mb-4">
+                                    <a href="/customers" class="btn btn-outline-secondary">
+                                        <i class="fa fa-arrow-left"/> Volver a Clientes
+                                    </a>
+                                </div>
+
+                                <!-- Customer Header -->
+                                <div class="customer_detail_header text-center mb-5">
+                                    <div class="customer_image_large mb-3">
+                                        <img t-if="customer.image_1920" 
+                                             t-att-src="image_data_uri(customer.image_1920)" 
+                                             class="img-fluid rounded-circle customer_avatar_large" 
+                                             t-att-alt="customer.name"/>
+                                        <div t-else="1" class="customer_placeholder_large">
+                                            <i t-if="customer.is_company" class="fa fa-building fa-5x"/>
+                                            <i t-else="1" class="fa fa-user fa-5x"/>
+                                        </div>
+                                    </div>
+                                    
+                                    <h1 class="customer_name_large" t-out="customer.name"/>
+                                    
+                                    <div class="customer_status_large">
+                                        <span t-if="customer.social_profile_complete" 
+                                              class="badge badge-success badge-lg">
+                                            <i class="fa fa-check-circle"/> Perfil Social Completo
+                                        </span>
+                                        <span t-elif="customer.facebook_url or customer.linkedin_url or customer.twitter_url" 
+                                              class="badge badge-warning badge-lg">
+                                            <i class="fa fa-exclamation-circle"/> 
+                                            <t t-out="round(customer.social_profile_completion_rate)"/>% Perfil Completo
+                                        </span>
+                                        <span t-else="1" class="badge badge-secondary badge-lg">
+                                            <i class="fa fa-info-circle"/> Sin Perfil Social
+                                        </span>
+                                    </div>
+                                </div>
+
+                                <!-- Customer Information -->
+                                <div class="customer_info_section mb-5">
+                                    <div class="row">
+                                        <div class="col-md-6" t-if="customer.website">
+                                            <div class="info_card">
+                                                <h6><i class="fa fa-globe"/> Sitio Web</h6>
+                                                <a t-att-href="customer.website" target="_blank" class="website_link">
+                                                    <t t-out="customer.website"/>
+                                                </a>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6" t-if="customer.email">
+                                            <div class="info_card">
+                                                <h6><i class="fa fa-envelope"/> Email</h6>
+                                                <a t-att-href="'mailto:%s' % customer.email" t-out="customer.email"/>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6" t-if="customer.phone">
+                                            <div class="info_card">
+                                                <h6><i class="fa fa-phone"/> Teléfono</h6>
+                                                <a t-att-href="'tel:%s' % customer.phone" t-out="customer.phone"/>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6" t-if="customer.street or customer.city">
+                                            <div class="info_card">
+                                                <h6><i class="fa fa-map-marker"/> Dirección</h6>
+                                                <div class="address">
+                                                    <span t-if="customer.street" t-out="customer.street"/><br t-if="customer.street"/>
+                                                    <span t-if="customer.city" t-out="customer.city"/>
+                                                    <span t-if="customer.country_id">, <t t-out="customer.country_id.name"/></span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Social Media Section -->
+                                <div class="social_media_section" t-if="social_media">
+                                    <h3 class="section_title text-center mb-4">
+                                        <i class="fa fa-share-alt"/> Conectar en Redes Sociales
+                                    </h3>
+                                    
+                                    <div class="social_media_large">
+                                        <t t-foreach="social_media" t-as="social">
+                                            <div class="social_platform_card">
+                                                <a t-att-href="social['url']" target="_blank" 
+                                                   class="social_platform_link"
+                                                   t-att-data-platform="social['platform']">
+                                                    <div class="social_icon_large" 
+                                                         t-att-style="'background-color: %s' % social['color']">
+                                                        <i t-att-class="'fa %s fa-3x' % social['icon']"/>
+                                                    </div>
+                                                    <h5 class="platform_name" t-out="social['name']"/>
+                                                    <p class="platform_url" t-out="social['url']"/>
+                                                </a>
+                                            </div>
+                                        </t>
+                                    </div>
+                                </div>
+                                    
+                                <div t-if="not social_media" class="no_social_media text-center">
+                                    <i class="fa fa-info-circle fa-3x text-muted mb-3"/>
+                                    <h5>No hay perfiles de redes sociales disponibles</h5>
+                                    <p>Este cliente aún no ha agregado sus perfiles de redes sociales.</p>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </t>
+        </template>
+
+    </data>
+</odoo>

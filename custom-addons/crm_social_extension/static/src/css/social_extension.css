@@ -1,0 +1,399 @@
+/* CRM Social Extension Backend Styles */
+
+/* Social Media Tab Styles */
+.social_profile_indicator {
+    margin-top: 10px;
+}
+
+.social_profile_indicator .badge {
+    font-size: 12px;
+    padding: 8px 12px;
+    border-radius: 15px;
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.social_profile_indicator .badge i {
+    font-size: 14px;
+}
+
+.social_media_preview {
+    background: #f8f9fa;
+    padding: 20px;
+    border-radius: 8px;
+    border: 1px solid #dee2e6;
+}
+
+.social_preview_item {
+    text-align: center;
+    padding: 15px;
+    margin-bottom: 10px;
+}
+
+.social_preview_item i {
+    display: block;
+    margin-bottom: 12px;
+}
+
+.social_preview_url {
+    margin-top: 8px;
+    font-size: 13px;
+    color: #666;
+    text-align: center;
+}
+
+.social_preview_link {
+    display: inline-block;
+    padding: 8px 16px;
+    margin-top: 5px;
+    border-radius: 6px;
+    text-decoration: none;
+    font-size: 12px;
+    font-weight: 500;
+    transition: all 0.3s ease;
+    cursor: pointer;
+    border: 2px solid;
+    background: white;
+    min-width: 120px;
+    text-align: center;
+}
+
+.social_preview_link.facebook {
+    color: #1877f2;
+    border-color: #1877f2;
+}
+
+.social_preview_link.facebook:hover {
+    background-color: #1877f2;
+    color: white;
+    text-decoration: none;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 8px rgba(24, 119, 242, 0.3);
+}
+
+.social_preview_link.linkedin {
+    color: #0077b5;
+    border-color: #0077b5;
+}
+
+.social_preview_link.linkedin:hover {
+    background-color: #0077b5;
+    color: white;
+    text-decoration: none;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 8px rgba(0, 119, 181, 0.3);
+}
+
+.social_preview_link.twitter {
+    color: #000000;
+    border-color: #000000;
+}
+
+.social_preview_link.twitter:hover {
+    background-color: #000000;
+    color: white;
+    text-decoration: none;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+}
+
+/* Ocultar iconos pequeños en la vista previa */
+.social_preview_url .o_field_widget .fa,
+.social_preview_url .o_field_widget .o_external_link {
+    display: none !important;
+}
+
+.social_preview_url .o_field_widget a {
+    display: none !important;
+}
+
+.social_preview_url .o_field_widget input {
+    display: none !important;
+}
+
+/* Smart Button Styles - Evitar superposición */
+.oe_stat_button {
+    position: relative;
+    padding-right: 25px !important; /* Espacio adicional para el icono */
+}
+
+.oe_stat_button .social_complete_badge {
+    position: absolute;
+    top: 8px;
+    right: 8px;
+    z-index: 10;
+}
+
+.oe_stat_button .social_complete_badge i {
+    font-size: 14px;
+    opacity: 0.8;
+}
+
+.oe_stat_button .o_stat_text {
+    font-size: 11px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+/* Kanban View Social Icons */
+.social_kanban_info {
+    min-height: 25px;
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.social_kanban_info .badge {
+    padding: 4px 8px;
+    font-size: 10px;
+    border-radius: 12px;
+    display: inline-flex;
+    align-items: center;
+    gap: 3px;
+    max-width: fit-content;
+}
+
+.social_icons {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+.social_icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    background: #ffffff;
+    border: 1px solid #dee2e6;
+    transition: all 0.2s ease;
+}
+
+.social_icon:hover {
+    transform: scale(1.1);
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.social_icon i {
+    font-size: 12px;
+}
+
+/* Social Links for Form View */
+.social_link {
+    display: inline-block;
+    text-align: center;
+    padding: 10px;
+    border-radius: 6px;
+    text-decoration: none;
+    transition: all 0.3s ease;
+    margin: 5px;
+}
+
+.social_link:hover {
+    text-decoration: none;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+}
+
+.social_link.facebook {
+    color: #1877f2;
+    border: 2px solid #1877f2;
+}
+
+.social_link.facebook:hover {
+    background-color: #1877f2;
+    color: white;
+}
+
+.social_link.linkedin {
+    color: #0077b5;
+    border: 2px solid #0077b5;
+}
+
+.social_link.linkedin:hover {
+    background-color: #0077b5;
+    color: white;
+}
+
+.social_link.twitter {
+    color: #000000;
+    border: 2px solid #000000;
+}
+
+.social_link.twitter:hover {
+    background-color: #000000;
+    color: white;
+}
+
+/* Specific platform colors for icons in kanban */
+.social_icon.facebook:hover {
+    background: #1877f2;
+    border-color: #1877f2;
+}
+
+.social_icon.facebook:hover i {
+    color: white !important;
+}
+
+.social_icon.linkedin:hover {
+    background: #0077b5;
+    border-color: #0077b5;
+}
+
+.social_icon.linkedin:hover i {
+    color: white !important;
+}
+
+.social_icon.twitter:hover {
+    background: #000000;
+    border-color: #000000;
+}
+
+.social_icon.twitter:hover i {
+    color: white !important;
+}
+
+/* Tree View Enhancements */
+.o_list_table .o_data_cell[name="social_profile_complete"] {
+    text-align: center;
+}
+
+.o_list_table .o_data_cell[name="social_profile_completion_rate"] {
+    text-align: center;
+    font-weight: 600;
+}
+
+/* Form View URL Fields with Icons */
+.o_form_view .o_field_widget[name="facebook_url"] {
+    position: relative;
+}
+
+.o_form_view .o_field_widget[name="facebook_url"]::before {
+    content: "\f09a";
+    font-family: FontAwesome;
+    color: #1877f2;
+    position: absolute;
+    left: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 10;
+    pointer-events: none;
+}
+
+.o_form_view .o_field_widget[name="facebook_url"] input {
+    padding-left: 35px;
+}
+
+.o_form_view .o_field_widget[name="linkedin_url"] {
+    position: relative;
+}
+
+.o_form_view .o_field_widget[name="linkedin_url"]::before {
+    content: "\f0e1";
+    font-family: FontAwesome;
+    color: #0077b5;
+    position: absolute;
+    left: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 10;
+    pointer-events: none;
+}
+
+.o_form_view .o_field_widget[name="linkedin_url"] input {
+    padding-left: 35px;
+}
+
+.o_form_view .o_field_widget[name="twitter_url"] {
+    position: relative;
+}
+
+.o_form_view .o_field_widget[name="twitter_url"]::before {
+    content: "\f099";
+    font-family: FontAwesome;
+    color: #000000;
+    position: absolute;
+    left: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 10;
+    pointer-events: none;
+}
+
+.o_form_view .o_field_widget[name="twitter_url"] input {
+    padding-left: 35px;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .social_icons {
+        gap: 4px;
+    }
+    
+    .social_icon {
+        width: 20px;
+        height: 20px;
+    }
+    
+    .social_icon i {
+        font-size: 10px;
+    }
+    
+    .social_profile_indicator .badge {
+        font-size: 10px;
+        padding: 6px 10px;
+    }
+    
+    .social_media_preview .row .col-md-4 {
+        margin-bottom: 15px;
+    }
+    
+    .social_preview_item {
+        padding: 10px;
+    }
+    
+    .social_preview_item i {
+        font-size: 2rem !important;
+    }
+    
+    .social_preview_link {
+        font-size: 11px;
+        padding: 6px 12px;
+        min-width: 100px;
+    }
+}
+
+@media (max-width: 576px) {
+    .social_media_preview {
+        padding: 15px;
+    }
+    
+    .social_preview_item {
+        padding: 8px;
+    }
+    
+    .social_preview_item i {
+        font-size: 1.5rem !important; 
+        margin-bottom: 8px !important;
+    }
+    
+    .social_preview_link {
+        font-size: 10px;
+        padding: 5px 10px;
+        min-width: 90px;
+    }
+}
+
+.social_preview_link {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 140px;
+    line-height: 1.2;
+}
+

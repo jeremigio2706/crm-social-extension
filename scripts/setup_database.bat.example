@@ -1,0 +1,57 @@
+@echo off
+REM =========================================================
+REM Script de ejemplo para configurar la base de datos
+REM Adapta según tu configuración de PostgreSQL
+REM =========================================================
+
+echo =====================================================
+echo    Configuración de Base de Datos                   
+echo =====================================================
+echo.
+
+REM Activar entorno virtual
+call activate_env.bat
+
+REM CONFIGURACIÓN DE BASE DE DATOS - ADAPTAR A TU ENTORNO
+set DB_NAME=crm_social_dev
+set DB_USER=odoo
+set DB_PASSWORD=odoo
+set DB_HOST=localhost
+set DB_PORT=5432
+
+REM RUTAS - ADAPTAR A TU INSTALACIÓN  
+set ODOO_BIN=C:\path\to\odoo\odoo-bin
+set CONFIG_FILE=config\odoo.conf
+
+echo Creando base de datos: %DB_NAME%
+echo.
+
+REM Verificar que PostgreSQL está ejecutándose
+pg_isready -h %DB_HOST% -p %DB_PORT% -U %DB_USER%
+if errorlevel 1 (
+    echo ERROR: PostgreSQL no está disponible en %DB_HOST%:%DB_PORT%
+    echo Verifica que PostgreSQL esté ejecutándose
+    pause
+    exit /b 1
+)
+
+REM Crear base de datos con Odoo
+python "%ODOO_BIN%" ^
+    -c "%CONFIG_FILE%" ^
+    -d "%DB_NAME%" ^
+    --stop-after-init ^
+    --without-demo=all
+
+if errorlevel 1 (
+    echo ERROR: Falló la creación de la base de datos
+    pause
+    exit /b 1
+)
+
+echo.
+echo ✓ Base de datos creada exitosamente
+echo ✓ Nombre: %DB_NAME%
+echo ✓ Usuario: %DB_USER%
+echo.
+echo Ahora puedes ejecutar: run_development.bat
+pause
